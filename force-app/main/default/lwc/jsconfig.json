@@ -2,7 +2,14 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "c/asm_assestDetailsPage": [
+                "asm_assestDetailsPage/asm_assestDetailsPage.js"
+            ],
+            "c/asm_UserSignUpPage": [
+                "asm_UserSignUpPage/asm_UserSignUpPage.js"
+            ]
+        }
     },
     "include": [
         "**/*",
