@@ -3,11 +3,11 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/asm_assestDetailsPage": [
-                "asm_assestDetailsPage/asm_assestDetailsPage.js"
-            ],
             "c/asm_UserSignUpPage": [
                 "asm_UserSignUpPage/asm_UserSignUpPage.js"
+            ],
+            "c/asm_assestDetailsPage": [
+                "asm_assestDetailsPage/asm_assestDetailsPage.js"
             ]
         }
     },
