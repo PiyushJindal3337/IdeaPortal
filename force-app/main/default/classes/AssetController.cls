@@ -14,7 +14,6 @@ public with sharing class AssetController {
         system.debug('assetId is:'+ assetId);
          return [SELECT Id, Name, Domain__c, Description__c, Asset_Number__c, Status__c,  Comments__c, Complexity__c
                 FROM Idea__c 
-                WHERE Id = :assetId
                 ];
     }
 
