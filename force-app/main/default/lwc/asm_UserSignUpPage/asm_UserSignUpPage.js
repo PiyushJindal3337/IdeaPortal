@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 
 
 import { createRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import lwc_OBJECT from '@salesforce/schema/lwc__c';
 
-
+import getUserRecord from '@salesforce/apex/asm_UserSignUpPage.getUserRecord';
 import NAME_FIELD from '@salesforce/schema/lwc__c.Name';
 import EMAIL_FIELD from '@salesforce/schema/lwc__c.Email__c';
 import PASSWORD_FIELD from '@salesforce/schema/lwc__c.Password__c';
@@ -19,9 +19,35 @@ export default class Asm_UserSignUpPage extends LightningElement {
     @track openLogin = false;
     @api recId;
 
+    @track loginUser;
+    @track loginUserErr;
     @track name = '';
     @track email = '';
     @track password = '';
+
+    @track emailUser;
+    @track passwordUser;
+
+    @wire(getUserRecord,{email : '$emailUser', password : '$passwordUser'})
+    wiredMetod({error, data}){
+        if(data!=null){
+            console.log('DATA : '+data);
+            console.log('DATA Stringify : '+JSON.stringify(data));
+        }
+        if(data==null){
+            console.log('You r not registered');
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'UNREGISTERED USER',
+                    message: 'You are not an authorized user',
+                    variant: 'failure'
+                }),
+            );
+        }
+        if(error){
+            console.log('Error : '+error);
+        }
+    }
 
     handleClick(event) {
         this.recId = event.currentTarget.name;
@@ -47,15 +73,16 @@ export default class Asm_UserSignUpPage extends LightningElement {
     handleEmailChange(event) {
         this.recId = undefined;
         this.email = event.target.value;
+        this.emailUser = event.target.value;
     }
 
     handlePasswordChange(event) {
         this.recId = undefined;
         this.password = event.target.value;
+        this.passwordUser = event.target.value;
     }
 
     save(){
-        
         
         const fields = {};
        fields[NAME_FIELD.fieldApiName] = this.name;
@@ -102,10 +129,32 @@ export default class Asm_UserSignUpPage extends LightningElement {
    }
 
    login(){
-    console.log("Email " + this.email );
-    console.log("Password " + this.password );
 
-    console.log("Email " + EMAIL_FIELD );
-    console.log("Password " + PASSWORD_FIELD );
+    /*const fields = {};
+       fields[EMAIL_FIELD.fieldApiName] = this.email;
+       fields[PASSWORD_FIELD.fieldApiName] = this.password;
+          
+       const loginRecord = { apiName: lwc_OBJECT.objectApiName, fields };
+       console.log('User Record +++++ : '+loginRecord);
+       console.log('User Record ,,,,, : ',loginRecord);*/
+       /*
+       getUserRecord({email : this.email, password : this.password})
+       .this(result=>{
+           console.log('Valueeeeeeeeeeeeeee');
+           if(result!=null){
+            this.loginUser = result;
+            console.log('Login user Details ,,,: ',result);
+            console.log('Login user Details +++: '+result);
+            }
+            else{
+                console.log('nO vALUE');
+            }  
+       })
+       .catch(error=>{
+           this.loginUserErr = error;
+           console.log('Login user Error ,,,: ',error);
+           console.log('Login user Error +++: '+error);
+       });*/
+
    }
 }

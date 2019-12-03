@@ -8,6 +8,9 @@
             ],
             "c/asm_assestDetailsPage": [
                 "asm_assestDetailsPage/asm_assestDetailsPage.js"
+            ],
+            "c/asm_ideaRegistrationForm": [
+                "asm_ideaRegistrationForm/asm_ideaRegistrationForm.js"
             ]
         }
     },
